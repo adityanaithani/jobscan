@@ -1,20 +1,28 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 
 
 def _to_date(val):
     if isinstance(val, datetime):
+        if val.tzinfo is None:
+            return val.replace(tzinfo=timezone.utc)
         return val
     if isinstance(val, date):
-        return datetime.combine(val, datetime.min.time())
+        dt = datetime.combine(val, datetime.min.time())
+        return dt.replace(tzinfo=timezone.utc)
     if isinstance(val, str):
         s = val.split(".")[0].replace("Z", "")
         for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S"):
             try:
-                return datetime.strptime(s, fmt)
+                dt = datetime.strptime(s, fmt)
+                # Make timezone-aware (assume UTC if not specified)
+                return dt.replace(tzinfo=timezone.utc)
             except ValueError:
                 continue
         try:
-            return datetime.fromisoformat(s)
+            dt = datetime.fromisoformat(s)
+            if dt.tzinfo is None:
+                return dt.replace(tzinfo=timezone.utc)
+            return dt
         except Exception:
             return None
     return None
@@ -56,7 +64,8 @@ def _is_recent(job, hours=24):
     if not job_date:
         return False
 
-    cutoff = datetime.utcnow() - timedelta(hours=hours)
+    # Use timezone-aware datetime for comparison
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
     return job_date >= cutoff
 
 
@@ -67,6 +76,7 @@ def filter_jobs(
     allowed_countries=None,
     hours=24,
 ):
+
     filtered = []
 
     for job in jobs:
