@@ -1,21 +1,20 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 
 def _to_date(val):
-    if isinstance(val, date) and not isinstance(val, datetime):
-        return val
     if isinstance(val, datetime):
-        return val.date()
+        return val
+    if isinstance(val, date):
+        return datetime.combine(val, datetime.min.time())
     if isinstance(val, str):
-        # try ISO / common datetime formats
-        s = val.split(".")[0]
+        s = val.split(".")[0].replace("Z", "")
         for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S"):
             try:
-                return datetime.strptime(s, fmt).date()
+                return datetime.strptime(s, fmt)
             except ValueError:
                 continue
         try:
-            return datetime.fromisoformat(val).date()
+            return datetime.fromisoformat(s)
         except Exception:
             return None
     return None
@@ -41,26 +40,24 @@ def _matches_location(job, allowed_countries=None):
     if not allowed_countries:
         return True
 
-    # Check location_country field (from Ashby, SmartRecruiters)
     country = job.get("location_country", "").upper()
     if country:
         return any(c.upper() in country for c in allowed_countries)
 
-    # Fallback: check location string (from Greenhouse)
     location = job.get("location", "").upper()
     if location:
         return any(c.upper() in location for c in allowed_countries)
 
-    # If no location data, include it (don't filter out)
     return True
 
 
-def _matches_date(job, target_date=None):
-    if target_date is None:
-        target_date = date.today()
-
+def _is_recent(job, hours=24):
     job_date = _to_date(job.get("updated"))
-    return job_date == target_date if job_date else False
+    if not job_date:
+        return False
+
+    cutoff = datetime.utcnow() - timedelta(hours=hours)
+    return job_date >= cutoff
 
 
 def filter_jobs(
@@ -68,7 +65,7 @@ def filter_jobs(
     keywords=None,
     exclude_keywords=None,
     allowed_countries=None,
-    updated_today=True,
+    hours=24,
 ):
     filtered = []
 
@@ -79,7 +76,7 @@ def filter_jobs(
         if not _matches_location(job, allowed_countries):
             continue
 
-        if updated_today and not _matches_date(job):
+        if hours and not _is_recent(job, hours=hours):
             continue
 
         filtered.append(job)

@@ -86,6 +86,7 @@ fetchers = [fetch_greenhouse, fetch_ashby, fetch_smartrecruiters]
 
 
 if __name__ == "__main__":
+    print("🔍 Scanning for jobs posted in the last 24 hours...\n")
     total_posted = 0
 
     for company in companies:
@@ -100,13 +101,13 @@ if __name__ == "__main__":
             keywords=TITLE_KEYWORDS,
             exclude_keywords=EXCLUDE_KEYWORDS,
             allowed_countries=ALLOWED_COUNTRIES,
-            updated_today=True,
+            hours=24,
         )
 
         print(f"Filtered down to {len(filtered)} jobs for {company}")
 
         for job in filtered:
-            job_id = f"{company}_{job['id']}"  # Create unique ID
+            job_id = f"{company}_{job['id']}"
 
             if is_posted(job_id):
                 print(f"Already posted: {job['title']} (skipping)")
