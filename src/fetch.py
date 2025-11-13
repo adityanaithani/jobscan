@@ -34,8 +34,23 @@ def _normalize_smartrecruiters(job):
         "company_name": job.get("company", {}).get("name", ""),
         "location": job.get("location", {}).get("city", ""),
         "location_country": job.get("location", {}).get("country", ""),
-        "posting_url": job.get("applyUrl", ""),
+        "posting_url": job.get("applyUrl", "") or job.get("ref", ""),
         "updated": job.get("releasedDate", ""),
+        "id": job.get("id", ""),
+    }
+
+
+def _normalize_lever(job):
+    categories = job.get("categories", {})
+    location = categories.get("location", "")
+
+    return {
+        "title": job.get("text", ""),
+        "company_name": categories.get("team", ""),
+        "location": location,
+        "location_country": job.get("country", ""),
+        "posting_url": job.get("hostedUrl", "") or job.get("applyUrl", ""),
+        "updated": job.get("createdAt", ""),
         "id": job.get("id", ""),
     }
 
@@ -77,3 +92,31 @@ def fetch_smartrecruiters(company: str):
     return _fetch_(
         company, url, "content", _normalize_smartrecruiters, "SmartRecruiters"
     )
+
+
+def fetch_lever(company: str):
+    url = f"https://api.lever.co/v0/postings/{company}"
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+
+        jobs = response.json()
+
+        if isinstance(jobs, list):
+            return [_normalize_lever(job) for job in jobs]
+        else:
+            print(f"Unexpected Lever response format for {company}")
+            return []
+
+    except requests.exceptions.HTTPError as e:
+        if response.status_code == 404:
+            print(f"404: '{company}' not found on Lever.")
+        else:
+            print(f"HTTP error occurred fetching {company} from Lever: {e}")
+        return []
+    except requests.exceptions.RequestException as e:
+        print(f"Error occurred fetching {company} from Lever: {e}")
+        return []
+    except (ValueError, KeyError) as e:
+        print(f"Error parsing JSON for {company} from Lever: {e}")
+        return []

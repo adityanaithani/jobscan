@@ -64,6 +64,14 @@ companies:
   - uber
   - lyft
   - airbnb
+  - spotify
+  - immuta
+  - voodoo
+  - whoop
+  - veeva
+  - allegiant
+  - nimblerx
+  - metabase
 
 filters:
   title_keywords:
@@ -74,6 +82,14 @@ filters:
     - fullstack
     - full stack
     - swe
+    - software developer
+    - web developer
+    - application developer
+    - systems engineer
+    - systems developer
+    - mobile developer
+    - mobile engineer
+    - programmer
 
   exclude_keywords:
     - intern
