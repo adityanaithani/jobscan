@@ -1,0 +1,101 @@
+companies:
+  - stripe
+  - cohere
+  - confluent
+  - openai
+  - snowflake
+  - acorns
+  - homebase
+  - sentry
+  - decagon
+  - figma
+  - base
+  - ramp
+  - faire
+  - andurilindustries
+  - notion
+  - brex
+  - gusto
+  - rubrik
+  - doordashusa
+  - doordashcanada
+  - instacart
+  - robinhood
+  - chime
+  - coinbase
+  - affirm
+  - databricks
+  - asana
+  - calendly
+  - lever
+  - PaloAltoNetworks2
+  - sandisk
+  - wix2
+  - boschgroup
+  - westerndigital
+  - aecom2
+  - aristanetworks
+  - qualtrics
+  - benchling
+  - chewy
+  - epicgames
+  - pinterest
+  - spotify
+  - zoom
+  - dropbox
+  - box
+  - adobe
+  - autodesk
+  - palantir
+  - visa
+  - linkedin
+  - anthropic
+  - cloudflare
+  - datadog
+  - okta
+  - handshake
+  - docusign
+  - charliehealth
+  - perplexity
+  - stabilityai
+  - deepmind
+  - spacex
+  - adidas
+  - uber
+  - lyft
+  - airbnb
+
+filters:
+  title_keywords:
+    - software engineer
+    - developer
+    - backend
+    - frontend
+    - fullstack
+    - full stack
+    - swe
+
+  exclude_keywords:
+    - intern
+    - internship
+    - extern
+    - externship
+    - co-op
+    - senior
+    - sr.
+    - staff
+    - lead
+    - manager
+    - director
+    - principal
+    - engineering manager
+    - engineering director
+
+  allowed_countries:
+    - USA
+    - US
+    - United States
+    - Canada
+    - CA
+
+  hours: 24

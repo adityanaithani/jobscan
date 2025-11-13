@@ -1,150 +1,27 @@
+import yaml
+from pathlib import Path
 from fetch import fetch_greenhouse, fetch_ashby, fetch_smartrecruiters
 from filter import filter_jobs
 from discord import post_to_discord
 from cache import is_posted, mark_posted
 
-companies = [
-    "stripe",
-    "cohere",
-    "confluent",
-    "openai",
-    "snowflake",
-    "acorns",
-    "homebase",
-    "sentry",
-    "decagon",
-    "figma",
-    "base",
-    "ramp",
-    "faire",
-    "andurilindustries",
-    "notion",
-    "brex",
-    "gusto",
-    "rubrik",
-    "doordashusa",
-    "doordashcanada",
-    "instacart",
-    "robinhood",
-    "chime",
-    "coinbase",
-    "affirm",
-    "databricks",
-    "asana",
-    "calendly",
-    "lever",
-    "PaloAltoNetworks2",
-    "sandisk",
-    "wix2",
-    "boschgroup",
-    "westerndigital",
-    "aecom2",
-    "aristanetworks",
-    "splunk",
-    "cloudera",
-    "qualtrics",
-    "medallia",
-    "benchling",
-    "chewy",
-    "epicgames",
-    "unity",
-    "morganstanley",
-    "jpmorgan",
-    "goldmansachs",
-    "bankofamerica",
-    "citadel",
-    "intuit",
-    "workday",
-    "salesforce",
-    "tiktok",
-    "snap",
-    "pinterest",
-    "spotify",
-    "zoom",
-    "dropbox",
-    "box",
-    "adobe",
-    "autodesk",
-    "palantir",
-    "amex",
-    "visa",
-    "mastercard",
-    "paypal",
-    "square",
-    "shopify",
-    "etsy",
-    "linkedin",
-    "microsoft",
-    "google",
-    "apple",
-    "amazon",
-    "meta",
-    "twitter",
-    "anthropic",
-    "asana",
-    "cloudflare",
-    "datadog",
-    "okta",
-    "athenahealth",
-    "handshake",
-    "docusign",
-    "charliehealth",
-    "perplexity",
-    "stabilityai",
-    "deepmind",
-    "tesla",
-    "spacex",
-    "nasa",
-    "intel",
-    "amd",
-    "nvidia",
-    "nike",
-    "adidas",
-    "uber",
-    "lyft",
-    "airbnb",
-]
 
-# Filter configuration
-TITLE_KEYWORDS = [
-    "software engineer",
-    "developer",
-    "backend",
-    "frontend",
-    "fullstack",
-    "full stack",
-    "swe",
-]
+def load_config():
+    """Load configuration from config.yml"""
+    config_path = Path(__file__).parent.parent / "config.yml"
+    with open(config_path, "r") as f:
+        return yaml.safe_load(f)
 
-EXCLUDE_KEYWORDS = [
-    "intern",
-    "internship",
-    "extern",
-    "externship",
-    "co-op",
-    "senior",
-    "sr.",
-    "staff",
-    "lead",
-    "manager",
-    "director",
-    "principal",
-    "engineering manager",
-    "engineering director",
-]
-
-ALLOWED_COUNTRIES = [
-    "USA",
-    "US",
-    "United States",
-    "Canada",
-    "CA",
-]
 
 fetchers = [fetch_greenhouse, fetch_ashby, fetch_smartrecruiters]
 
 
 if __name__ == "__main__":
+    # Load configuration
+    config = load_config()
+    companies = config["companies"]
+    filters_config = config["filters"]
+
     print("🔍 Scanning for jobs posted in the last 24 hours...\n")
     total_posted = 0
 
@@ -155,12 +32,13 @@ if __name__ == "__main__":
                 break
 
         print(f"Fetched {len(jobs)} jobs from {company}")
+
         filtered = filter_jobs(
             jobs,
-            keywords=TITLE_KEYWORDS,
-            exclude_keywords=EXCLUDE_KEYWORDS,
-            allowed_countries=ALLOWED_COUNTRIES,
-            hours=24,
+            keywords=filters_config["title_keywords"],
+            exclude_keywords=filters_config["exclude_keywords"],
+            allowed_countries=filters_config["allowed_countries"],
+            hours=filters_config["hours"],
         )
 
         print(f"Filtered down to {len(filtered)} jobs for {company}")
