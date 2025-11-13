@@ -1,4 +1,6 @@
+data/
 .env
 __pycache__/
-samples/
-data/
+*.pyc
+.DS_Store
+requirements.txt

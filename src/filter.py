@@ -2,7 +2,6 @@ from datetime import datetime, date
 
 
 def _to_date(val):
-    """Convert various date formats to date object"""
     if isinstance(val, date) and not isinstance(val, datetime):
         return val
     if isinstance(val, datetime):
@@ -22,16 +21,23 @@ def _to_date(val):
     return None
 
 
-def _matches_title(job, keywords):
-    """Check if job title contains any of the keywords"""
-    if not keywords:
-        return True
+def _matches_title(job, includekw, excludekw):
     title = job.get("title", "").lower()
-    return any(k.lower() in title for k in keywords)
+
+    if includekw:
+        has_include = any(k.lower() in title for k in includekw)
+        if not has_include:
+            return False
+
+    if excludekw:
+        has_exclude = any(k.lower() in title for k in excludekw)
+        if has_exclude:
+            return False
+
+    return True
 
 
 def _matches_location(job, allowed_countries=None):
-    """Check if job location is in allowed countries"""
     if not allowed_countries:
         return True
 
@@ -50,7 +56,6 @@ def _matches_location(job, allowed_countries=None):
 
 
 def _matches_date(job, target_date=None):
-    """Check if job was updated on target date"""
     if target_date is None:
         target_date = date.today()
 
@@ -58,23 +63,17 @@ def _matches_date(job, target_date=None):
     return job_date == target_date if job_date else False
 
 
-def filter_jobs(jobs, keywords=None, allowed_countries=None, updated_today=True):
-    """
-    Filter jobs based on title keywords, location, and update date.
-
-    Args:
-        jobs: List of normalized job dicts
-        keywords: List of keywords to match in job title (e.g., ["software engineer", "developer"])
-        allowed_countries: List of country codes/names (e.g., ["USA", "US", "Canada", "CA"])
-        updated_today: If True, only return jobs updated today
-
-    Returns:
-        List of filtered jobs
-    """
+def filter_jobs(
+    jobs,
+    keywords=None,
+    exclude_keywords=None,
+    allowed_countries=None,
+    updated_today=True,
+):
     filtered = []
 
     for job in jobs:
-        if not _matches_title(job, keywords):
+        if not _matches_title(job, keywords, exclude_keywords):
             continue
 
         if not _matches_location(job, allowed_countries):

@@ -46,7 +46,6 @@ companies = [
     "medallia",
 ]
 
-
 # Filter configuration
 TITLE_KEYWORDS = [
     "software engineer",
@@ -56,6 +55,23 @@ TITLE_KEYWORDS = [
     "fullstack",
     "full stack",
     "swe",
+]
+
+EXCLUDE_KEYWORDS = [
+    "intern",
+    "internship",
+    "extern",
+    "externship",
+    "co-op",
+    "senior",
+    "sr.",
+    "staff",
+    "lead",
+    "manager",
+    "director",
+    "principal",
+    "engineering manager",
+    "engineering director",
 ]
 
 ALLOWED_COUNTRIES = [
@@ -82,6 +98,7 @@ if __name__ == "__main__":
         filtered = filter_jobs(
             jobs,
             keywords=TITLE_KEYWORDS,
+            exclude_keywords=EXCLUDE_KEYWORDS,
             allowed_countries=ALLOWED_COUNTRIES,
             updated_today=True,
         )
@@ -100,4 +117,4 @@ if __name__ == "__main__":
             mark_posted(job_id)
             total_posted += 1
 
-    print(f"\n✅ Posted {total_posted} new jobs to Discord")
+    print(f"\n🟩 Posted {total_posted} new jobs to Discord")

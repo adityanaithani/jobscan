@@ -1,0 +1,9 @@
+services:
+  jobscan:
+    build: .
+    container_name: jobscan
+    environment:
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+    volumes:
+      - ./data:/app/data # Persist cache between runs
+    restart: unless-stopped
