@@ -72,6 +72,24 @@ companies:
   - allegiant
   - nimblerx
   - metabase
+  - pwc
+  - mcdonalds
+  - ucla
+  - blueorigin
+  - baseten
+  - crunchyroll
+  - jetblue
+  - replit
+  - unity
+  - snap
+  - google
+  - gitlab
+  - github
+  - microsoft
+  - apple
+  - netflix
+  - amazon
+  - meta
 
 filters:
   title_keywords:
