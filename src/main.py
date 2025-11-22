@@ -17,12 +17,11 @@ fetchers = [fetch_greenhouse, fetch_ashby, fetch_smartrecruiters, fetch_lever]
 
 
 if __name__ == "__main__":
-    # Load configuration
     config = load_config()
     companies = config["companies"]
     filters_config = config["filters"]
 
-    print("🔍 Scanning for jobs posted in the last 24 hours...\n")
+    print("Scanning for jobs posted in the last 24 hours...\n")
     total_posted = 0
 
     for company in companies:
@@ -46,7 +45,7 @@ if __name__ == "__main__":
         for job in filtered:
             job_id = f"{company}_{job['id']}"
 
-            if is_posted(job_id):
+            if is_posted(job_id, hours=24):
                 print(f"Already posted: {job['title']} (skipping)")
                 continue
 
