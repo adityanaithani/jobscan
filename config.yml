@@ -90,6 +90,17 @@ companies:
   - netflix
   - amazon
   - meta
+  - sanofi
+  - jpmorgan
+  - goldmansachs
+  - bankofamerica
+  - dell
+  - hp
+  - intel
+  - nvidia
+  - qualcomm
+  - salesforce
+  - sap
 
 filters:
   title_keywords:
@@ -108,6 +119,7 @@ filters:
     - mobile developer
     - mobile engineer
     - programmer
+    - biotech
 
   exclude_keywords:
     - intern
@@ -129,6 +141,7 @@ filters:
     - USA
     - US
     - United States
+    - United States of America
     - Canada
     - CA
 
