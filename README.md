@@ -1,6 +1,6 @@
 # JobScan
 
-[![Deploy JobScan](https://github.com/adityanaithani/jobscan/actions/workflows/main.yml/badge.svg)](https://github.com/adityanaithani/jobscan/actions/workflows/main.yml)
+<!--[![Deploy JobScan](https://github.com/adityanaithani/jobscan/actions/workflows/main.yml/badge.svg)](https://github.com/adityanaithani/jobscan/actions/workflows/main.yml)-->
 
 Job board scraper notifying of new positions through Discord.
 
