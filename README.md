@@ -1,14 +1,11 @@
 # JobScan
 
-<!--[![Deploy JobScan](https://github.com/adityanaithani/jobscan/actions/workflows/main.yml/badge.svg)](https://github.com/adityanaithani/jobscan/actions/workflows/main.yml)-->
-
-Job board scraper notifying of new positions through Discord.
+Personalized job board scraper updating new positions hourly via Discord (hours before LinkedIn or any of the big job boards!)
 
 ## Features
 
-- Fetches jobs from Greenhouse, Ashby, SmartRecruiters, Lever
+- Fetches jobs from Greenhouse, Ashby, SmartRecruiters, Lever, Dayforce
 - Customizable filters - title keywords, location, and date
-- Posts to Discord via webhook
 
 ## Deployment
 
@@ -17,6 +14,7 @@ Self-hosted, using Docker / GitHub Actions for CI/CD.
 ## Todo
 
 - [x] add Lever scraper
+- [x] add Dayforce scraper
 - [ ] add Dover scraper
 - [ ] add Workday scraper
 - [x] refine / grow list of companies
