@@ -40,6 +40,20 @@ def _normalize_smartrecruiters(job):
     }
 
 
+def _normalize_dayforce(job):
+    return {
+        "title": job.get("Title", ""),
+        "company_name": job.get("CompanyName", "") or "",
+        "location": job.get("City", "") or "",
+        "location_country": job.get("Country", "") or "",
+        "posting_url": job.get("JobDetailsUrl", "") or job.get("ApplyUrl", "") or "",
+        "updated": job.get("LastUpdated", "") or job.get("DatePosted", ""),
+        "id": job.get("ReferenceNumber")
+        or job.get("PositionID")
+        or job.get("Title", ""),
+    }
+
+
 def _normalize_lever(job):
     categories = job.get("categories", {})
     location = categories.get("location", "")
@@ -92,6 +106,37 @@ def fetch_smartrecruiters(company: str):
     return _fetch_(
         company, url, "content", _normalize_smartrecruiters, "SmartRecruiters"
     )
+
+
+def fetch_dayforce(company: str):
+    url = f"https://www.dayforcehcm.com/api/{company}/V1/JobFeeds"
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+
+        jobs = response.json()
+
+        if isinstance(jobs, list):
+            return [_normalize_dayforce(job) for job in jobs]
+        elif isinstance(jobs, dict):
+            items = jobs.get("content") or jobs.get("jobs") or []
+            return [_normalize_dayforce(job) for job in items]
+        else:
+            print(f"Unexpected Dayforce response format for {company}")
+            return []
+
+    except requests.exceptions.HTTPError as e:
+        if response.status_code == 404:
+            print(f"404: '{company}' not found on Dayforce.")
+        else:
+            print(f"HTTP error occurred fetching {company} from Dayforce: {e}")
+        return []
+    except requests.exceptions.RequestException as e:
+        print(f"Error occurred fetching {company} from Dayforce: {e}")
+        return []
+    except (ValueError, KeyError) as e:
+        print(f"Error parsing JSON for {company} from Dayforce: {e}")
+        return []
 
 
 def fetch_lever(company: str):

@@ -12,7 +12,6 @@ companies:
   - base
   - ramp
   - faire
-  - andurilindustries
   - notion
   - brex
   - gusto
@@ -59,7 +58,6 @@ companies:
   - perplexity
   - stabilityai
   - deepmind
-  - spacex
   - adidas
   - uber
   - lyft
@@ -101,6 +99,41 @@ companies:
   - qualcomm
   - salesforce
   - sap
+  - qfg
+  - siemens
+  - generalmotors
+  - ford
+  - boeing
+  - lockheedmartin
+  - raytheon
+  - northropgrumman
+  - sobeys
+  - loblaws
+  - walmart
+  - target
+  - costco
+  - kroger
+  - ceridian
+  - workday
+  - adp
+  - ultimatehr
+  - paycom
+  - intuit
+  - fedex
+  - ups
+  - dhl
+  - citibank
+  - americanexpress
+  - mastercard
+  - paypal
+  - johnsonandjohnson
+  - pfizer
+  - merck
+  - abbvie
+  - roche
+  - novartis
+  - bayer
+  - astrazeneca
 
 filters:
   title_keywords:
@@ -120,6 +153,9 @@ filters:
     - mobile engineer
     - programmer
     - biotech
+    - bioinformatics
+    - product manager
+    - associate product manager
 
   exclude_keywords:
     - intern
@@ -131,11 +167,8 @@ filters:
     - sr.
     - staff
     - lead
-    - manager
     - director
     - principal
-    - engineering manager
-    - engineering director
 
   allowed_countries:
     - USA

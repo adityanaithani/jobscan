@@ -81,12 +81,15 @@ def filter_jobs(
 
     for job in jobs:
         if not _matches_title(job, keywords, exclude_keywords):
+            # print(f"Excluding '{job.get('title')}' due to title keyword mismatch.")
             continue
 
         if not _matches_location(job, allowed_countries):
+            # print(f"Excluding '{job.get('title')}' due to location mismatch.")
             continue
 
         if hours and not _is_recent(job, hours=hours):
+            # print(f"Excluding '{job.get('title')}' due to age (> {hours} hours).")
             continue
 
         filtered.append(job)

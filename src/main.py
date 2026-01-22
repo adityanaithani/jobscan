@@ -1,6 +1,12 @@
 import yaml
 from pathlib import Path
-from fetch import fetch_greenhouse, fetch_ashby, fetch_smartrecruiters, fetch_lever
+from fetch import (
+    fetch_greenhouse,
+    fetch_ashby,
+    fetch_smartrecruiters,
+    fetch_lever,
+    fetch_dayforce,
+)
 from filter import filter_jobs
 from discord import post_to_discord
 from cache import is_posted, mark_posted
@@ -13,7 +19,13 @@ def load_config():
         return yaml.safe_load(f)
 
 
-fetchers = [fetch_greenhouse, fetch_ashby, fetch_smartrecruiters, fetch_lever]
+fetchers = [
+    fetch_greenhouse,
+    fetch_ashby,
+    fetch_smartrecruiters,
+    fetch_lever,
+    fetch_dayforce,
+]
 
 
 if __name__ == "__main__":

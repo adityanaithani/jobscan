@@ -6,7 +6,7 @@ Job board scraper notifying of new positions through Discord.
 
 ## Features
 
-- Fetches jobs from Greenhouse, Ashby, SmartRecruiters
+- Fetches jobs from Greenhouse, Ashby, SmartRecruiters, Lever
 - Customizable filters - title keywords, location, and date
 - Posts to Discord via webhook
 
@@ -16,7 +16,9 @@ Self-hosted, using Docker / GitHub Actions for CI/CD.
 
 ## Todo
 
-- [ ] add additional job board scrapers (Dover, Workday, Lever)
-- [ ] refine / grow list of companies
+- [x] add Lever scraper
+- [ ] add Dover scraper
+- [ ] add Workday scraper
+- [x] refine / grow list of companies
 - [ ] change to async requests to accomodate for scale
 - [ ] implement queue to avoid discord api rate limits
