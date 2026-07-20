@@ -134,14 +134,50 @@ companies:
   - novartis
   - bayer
   - astrazeneca
+  - glaxosmithkline
+  - abbott
+  - bostonscientific
+  - medtronic
+  - siemenshealthineers
+  - philips
+  - siemens
+  - samsung
+  - lg
+  - sony
+  - transit
+  - bosch
+  - panasonic
+  - toshiba
+  - mitsubishi
+  - hitachi
+  - honeywell
+  - ge
+  - emerson
+  - aviva
+  - allianz
+  - axa
+  - prudential
+  - metlife
+  - aetna
+  - cigna
+  - unitedhealth
+  - anthem
+  - centene
+  - humana
+  - bluecrossblueshield
 
 filters:
   title_keywords:
     - software engineer
     - developer
     - backend
+    - back-end
+    - back end
     - frontend
+    - front-end
+    - front end
     - fullstack
+    - full-stack
     - full stack
     - swe
     - software developer
@@ -156,12 +192,17 @@ filters:
     - bioinformatics
     - product manager
     - associate product manager
+    - software
+    - developer
+    - engineer
+    - data engineer
+    - data scientist
+    - data consultant
+    - consultant
 
   exclude_keywords:
     - intern
     - internship
-    - extern
-    - externship
     - co-op
     - senior
     - sr.
