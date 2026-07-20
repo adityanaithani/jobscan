@@ -13,10 +13,5 @@ Self-hosted, using Docker / GitHub Actions for CI/CD.
 
 ## Todo
 
-- [x] add Lever scraper
-- [x] add Dayforce scraper
-- [ ] add Dover scraper
-- [ ] add Workday scraper
-- [x] refine / grow list of companies
 - [ ] change to async requests to accomodate for scale
-- [ ] implement queue to avoid discord api rate limits
+- [x] implement queue to avoid discord api rate limits
